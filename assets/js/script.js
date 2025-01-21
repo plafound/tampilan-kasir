@@ -17,7 +17,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // Fungsi untuk memperbarui total harga
     function calculateTotals() {
         const subtotal = cartItems.reduce((sum, item) => sum + item.harga * item.quantity, 0);
-        const tax = subtotal * 0.1; // Pajak 10%
+        // const tax = subtotal * 0.1; // Pajak 10% dari subtotal
+        const tax = 0;
         const total = subtotal + tax;
 
         // Update tampilan subtotal, pajak, dan total
@@ -113,7 +114,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Tambahkan event listener pada setiap card menu
-    productMenu.querySelectorAll(".card").forEach((card) => {
+    productMenu.querySelectorAll(".card-menu").forEach((card) => {
         card.addEventListener("click", () => {
             const name = card.dataset.name;
             const kategori = card.dataset.kategori;
@@ -124,7 +125,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Fungsi untuk menampilkan menu berdasarkan kategori
     function filterMenu(category) {
-        const cards = productMenu.querySelectorAll('.card');
+        const cards = productMenu.querySelectorAll('.card-menu');
         cards.forEach(card => {
             const cardCategory = card.dataset.kategori;
             if (category === 'Semua' || cardCategory === category) {
@@ -184,4 +185,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Menampilkan modal konfirmasi pemesanan
     document.getElementById("confirmButton").addEventListener("click", showConfirmationModal);
+
+    // Mencegah klik kanan dan keyboard shortcut tertentu
+    document.addEventListener('contextmenu', (event) => event.preventDefault());
+    document.addEventListener('keydown', (event) => {
+        // Mencegah F12
+        if (event.key === "F12") {
+            event.preventDefault();
+        }
+        // Mencegah Ctrl+Shift+I
+        if (event.ctrlKey && event.shiftKey && event.key === "I") {
+            event.preventDefault();
+        }
+        // Mencegah Ctrl+U (melihat sumber halaman)
+        if (event.ctrlKey && event.key === "u") {
+            event.preventDefault();
+        }
+    });
 });
